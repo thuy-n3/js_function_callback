@@ -54,11 +54,18 @@ console.assert(sum(4, 100) === 104);
 // of your average function.
 
 var average = function(num1,num2){
-	return sum(num1,num2)/2
+	var theSum = sum(num1,num2)
+	return theSum/2
 }
 
 console.assert(average(8,12) === 10)
 console.assert(average(100,200) === 150)
+
+//note:
+//var average = function(num1,num2){
+//	var theSum = sum(num1,num2)
+//	return sum(num1,num2)/2
+//}
 
 /**
  * PART 3
@@ -71,10 +78,11 @@ var sum = function(num1, num2){
 	if(typeof num1 !== 'number' || typeof num2 !== 'number'){
 		return null
 	}
-else{
-	return num1 + num2
+	else{
+		return num1 + num2
 	}
 }
+
 
 console.assert(sum(867, 5309) === 6176);
 console.assert(sum('867', 5309) === null);
@@ -93,6 +101,11 @@ var isNegative = function(num1){
 	return false
 }
 
+//note:
+//var isNegative = function(number){
+//	return number < 0
+//}
+
 
 console.assert(isNegative(10) === false)
 console.assert(isNegative(0) === false)
@@ -105,6 +118,9 @@ console.assert(isNegative(-999) === true)
 // function inside your sum funciton ***
 
 var sum = function(num1, num2){
+	if(typeof num1 !== 'number' || typeof num2 !== 'number'){
+		return null
+	}
 	if (isNegative(num1) === true || isNegative(num2) === true){
 		return null 
 	}
@@ -113,6 +129,21 @@ var sum = function(num1, num2){
 	}
 
 }
+
+//note: - 2, -1 
+//var sum = function(num1, num2){
+//	if(typeof num1 !== 'number' || typeof num2 !== 'number'){
+//		return null
+//	}
+//	if (isNegative(num1) === true || isNegative(num2) === true){
+//		return null 
+//	}
+//	else{
+//		return num1 + num2
+//	}
+//}
+
+
 console.log(sum(5,5))
 console.assert(sum(5,-5) === null)
 
@@ -130,6 +161,12 @@ console.assert(X === 10)
 increment()
 console.assert(X === 11)
 
+//Note: variable that live out the function - function can access x=10(global variable)
+//from in inward scope, can you see outside but you can't see inside 
+
+// Note: the variable declare outside, the variable can be access from the inside 
+
+
 // This exercise is meant to demonstrate the concept
 // of scope. The variable X here must have global
 // scope in order for the assertions to pass. 
@@ -143,9 +180,11 @@ console.assert(X === 11)
 // function below. Make the following assertions
 // pass.
 var x = 10  
-var increment = function(){
-	return x + 1
+var increment = function(number){
+	return number  + 1
 }
+
+//use number instead of x because 'number' is universal accessble compare to x  
 
 console.assert(x === 10)
 var y = increment(x)
@@ -202,6 +241,8 @@ var justOneString = function(value1, value2){
 	}
 }
 
+// try it with || 
+
 console.assert(justOneString('a',5) === true)
 console.assert(justOneString(6,'dotron') === true)
 console.assert(justOneString('peanut','butter') === false)
@@ -216,6 +257,12 @@ console.assert(justOneString(8,null) === false)
 // modify global variables, although that's not a good
 // pattern for production code.
 
+
+var doTwice = function(someFunction){
+	someFunction()
+	someFunction()
+}
+
 var NUMBER = 10
 
 var incrementGlobalNumber = function(){
@@ -228,12 +275,11 @@ var doubleGlobalNumber = function() {
 
 
 
-var doTwice = function(something){
-	var value = something()
-	var value = something(value)
-	return value  
-}	
-
+//var doTwice = function(something){
+//	var value = something()
+//	var value = something(value)
+//	return value  
+//}	
 
 
 doTwice(incrementGlobalNumber)
@@ -253,23 +299,24 @@ var ORACLE = 'NO'
 
 var conditionallyInvoke = function(something){
 	if(ORACLE === "YES"){
-		var newThing = something()
-			return newThing
+		return something()
 	}
 }
 
 conditionallyInvoke(doubleGlobalNumber)
 console.assert(NUMBER === 48)
 
-
 ORACLE = 'YES'
 
-var conditionallyInvoke = function(something){
-	if(ORACLE === "YES"){
-		var newThing = something()
-			return newThing
-	}
-}
+conditionallyInvoke(doubleGlobalNumber)
+console.assert(NUMBER === 96)
+
+//var conditionallyInvoke = function(something){
+//	if(ORACLE === "YES"){
+//		var newThing = something()  
+//			return newThing
+//	}
+//}
 
 //var conditionllyInvoke = function(something){
 //	if(ORACLE === "YES"){
@@ -277,18 +324,19 @@ var conditionallyInvoke = function(something){
 //	}
 //}
 
-conditionallyInvoke(doubleGlobalNumber)
-console.assert(NUMBER === 96)
-
-
 
 
 // Part 10
 
 // Make the following assertion work:
 
-console.assert(factory()() === 'hello world')  // INCEPTION!
+var output = factory()
+var metaOutput = output()
+console.log(output)
 
+console.assert(factory()() === 'hello world')  // INCEPTION!
+//factory() is a function that call the output of factory()
+//the second () is calling the output of facotry()
 
 
 // Part 11
